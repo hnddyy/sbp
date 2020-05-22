@@ -10,9 +10,13 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.example.sbp.domain.User;
+import com.example.sbp.mapper.UserMapper;
 
 @SpringBootTest
 class SbpApplicationTests {
@@ -20,7 +24,20 @@ class SbpApplicationTests {
 	@Autowired
 	private DataSource ds;
 	
+	@Autowired
+	private UserMapper mapper;
+	
 	@Test
+	public void testUserMapper() throws Exception {
+		User user = mapper.getLoginInfo("test1");
+		System.out.println("User >>" + user);
+		assertEquals("김일",user.getUserName());
+		
+		String userName = mapper.getUserName("test2");
+		assertEquals("김이", userName);
+	}
+	
+	@Ignore @Test
 	public void testDataSource() throws Exception {
 		System.out.println("DS=" + ds);
 		
